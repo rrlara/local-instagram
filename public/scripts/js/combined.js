@@ -40844,7 +40844,11 @@ InstagramPhoto = React.createClass({
   getLocationStr: function() {
     var distanceStr, meters;
     meters = Math.round(distanceBetweenPoints(this.props.userCoords, this.props.location));
-    distanceStr = (meters / 1000).toFixed(2) + "km";
+    if (meters >= 1609.34) {
+      distanceStr = (meters * 0.000621371).toFixed(2) + " miles";
+    } else {
+      distanceStr = (meters / 3.28084).toFixed(2) + " feet";
+    }
     if (this.props.location.name) {
       distanceStr += " (" + this.props.location.name + ")";
     }

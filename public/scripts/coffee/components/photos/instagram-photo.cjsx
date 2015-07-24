@@ -19,14 +19,20 @@ distanceBetweenPoints = (p1, p2) ->
 
 	c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 	d = R * c
-	return d # returns the distance in meter
+	return d # returns the distance in meterss
 
 InstagramPhoto = React.createClass
 	getRelativeTime: (timestamp) ->
 		Moment( timestamp * 1000 ).fromNow()
 	getLocationStr: ->
-		meters = Math.round distanceBetweenPoints(@props.userCoords, @props.location)
-		distanceStr = (meters / 1000).toFixed(2) + "km"
+		meters = (Math.round distanceBetweenPoints(@props.userCoords, @props.location))
+		#distanceStr = (meters).toFixed(2) + " miles"
+
+		if meters >= 1609.34
+			distanceStr = ((meters)* 0.000621371).toFixed(2) + " miles"
+		else
+			distanceStr = (meters/3.28084).toFixed(2) + " feet"
+
 		if @props.location.name
 			distanceStr += " (#{@props.location.name})"
 		return distanceStr
